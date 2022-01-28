@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Post
+{% endblock %}
+
+{% block content %}
+    <div class="container bg-light pb-3 border border-dark my-3">
+        {% if not user.is_anonymous %}
+            <h1 class="text-center my-3">Create Post</h1>
+            {% if post_form.errors %}
+                <div class="bg-danger text-white">
+                {{ post_form.errors }}
+            </div>
+            {% endif %}
+            <form action="{% url 'create_post' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <label class="form-label">{{ post_form.title.label_tag }}</label>
+                    <input type="text" class="form-control" name="title" required>
+                </div>
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <label class="form-label">{{ post_form.excerpt.label_tag }}</label>
+                    <input type="text" class="form-control" name="excerpt" required>
+                </div>
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <label class="form-label">{{ post_form.content.label_tag }}</label>
+                    <textarea class="form-control" name="content" rows="10" required></textarea>
+                </div>
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <label class="form-label">{{ post_form.slug.label_tag }}</label>
+                    <input type="text" class="form-control" name="slug" required>
+                </div>
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <label class="form-label">{{ post_form.image.label_tag }}</label>
+                    <input type="file" class="form-control" name="image" required>
+                </div>
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <input type="submit" class="btn btn-outline-primary" value="Post">
+                </div>
+            </form>
+        {% else %}
+            <div class="bg-secondary text-white m-2">
+                <div class="p-3">
+                    <h6>Login First!!!</h6>
+                    <a href="{% url 'login_page' %}" class="link-light">Login</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    SignUp
+{% endblock %}
+
+{% block content %}
+    <div class="container bg-light pb-3 border border-dark  my-3">
+        <h1 class="text-center my-3">Sign Up</h1>
+        <form action="{% url 'signup_page' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                <label class="form-label">{{ signup_form.username.label_tag }}</label>
+                <input type="text" class="form-control" name="username" required>
+                <div class="form-text">{{ signup_form.username.errors }}</div>
+            </div>
+            <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                <label class="form-label">{{ signup_form.password.label_tag }}</label>
+                <input type="password" class="form-control" name="password" required>
+                <div class="form-text">{{ signup_form.password.errors }}</div>
+            </div>
+            <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                <label class="form-label">{{ signup_form.first_name.label_tag }}</label>
+                <input type="text" class="form-control" name="first_name" required>
+                <div class="form-text">{{ signup_form.first_name.errors }}</div>
+            </div>
+            <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                <label class="form-label">{{ signup_form.last_name.label_tag }}</label>
+                <input type="text" class="form-control" name="last_name" required>
+                <div class="form-text">{{ signup_form.last_name.errors }}</div>
+            </div>
+            <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                <label class="form-label">{{ signup_form.email.label_tag }}</label>
+                <input type="email" class="form-control" name="email" required>
+                <div class="form-text">{{ signup_form.email.errors }}</div>
+            </div>
+            <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                <input type="submit" class="btn btn-outline-primary" value="Sign Up">
+            </div>
+        </form>
+        <div class="text-center">
+            <p>OR</p>
+            <a href="{% url 'login_page' %}" class="link-secondary">Login</a>
+        </div>
+    </div>
+{% endblock %}

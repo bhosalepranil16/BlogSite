@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+        <div class="container bg-light pb-3 border border-dark my-3">
+        {% if user.is_anonymous %}
+            <h1 class="text-center my-3">Login</h1>
+            {% if form.errors %}
+                <div class="bg-danger text-white">
+                <h6 class="p-1">{{ form.errors }}</h6>
+            </div>
+            {% endif %}
+            <form action="{% url 'login_page' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <label class="form-label">{{ form.username.label_tag }}</label>
+                    <input type="text" class="form-control" name="username" required>
+                </div>
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <label class="form-label">{{ form.password.label_tag }}</label>
+                    <input type="password" class="form-control" name="password" required>
+                </div>
+                <div class="mb-3 w-50 mx-auto border border-secondary p-3">
+                    <input type="submit" class="btn btn-outline-primary" value="Login">
+                </div>
+            </form>
+            <div class="text-center">
+                <p>OR</p>
+                <a href="{% url 'signup_page' %}" class="link-secondary">Signup</a>
+            </div>
+        {% else %}
+            <div class="bg-secondary text-white m-2">
+                <div class="p-3">
+                    <h6>Already Logined with Username: {{ user }}</h6>
+                    <a href="{% url 'logout' %}" class="link-light">Logout</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
