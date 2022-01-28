@@ -14,7 +14,7 @@
             <div class="col-md-8">
                 <div class="m-2">
                     <h3>Author</h3>
-                    <p>{{ post.author }}</p>
+                    <a href="{% url "profile_page" post.author.username %}" class="card-text link-dark">{{ post.author }}</a>
                     <hr />
                 </div>
                 <div class="m-2">
