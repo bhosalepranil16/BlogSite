@@ -22,29 +22,28 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggler">
                     <a class="navbar-brand" href="{% url 'index_page' %}">BlogSite</a>
+                 {% with request.resolver_match.view_name as view_name %}
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url "all-posts" %}">All Posts</a>
-                        </li>
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="#">Stored Posts</a>#}
-{#                        </li>#}
-                    <li class="nav-item">
-                            <a class="nav-link" href="{% url "create_post" %}">Create Post</a>
+                            <a class="nav-link {% if view_name == 'all-posts' %}active{% endif %}" aria-current="page" href="{% url "all-posts" %}">All Posts</a>
                         </li>
                         <li class="nav-item">
-                            {% if user.is_anonymous %}
-                                <a class="nav-link" href="{% url "login_page" %}">Login</a>
-                            {% else %}
-                                <a class="nav-link" href="{% url "logout" %}">Logout</a>
-                            {% endif %}
-                        </li>
-                        <li class="nav-item">
-                            {% if not user.is_anonymous %}
-                                <a class="nav-link" href="{% url "profile_page" user %}">Profile</a>
-                            {% endif %}
-                        </li>
+                                <a class="nav-link {% if view_name == 'create_post' %}active{% endif %}" href="{% url "create_post" %}">Create Post</a>
+                            </li>
+                            <li class="nav-item">
+                                {% if user.is_anonymous %}
+                                    <a class="nav-link {% if view_name == 'login_page' %}active{% endif %}" href="{% url "login_page" %}">Login</a>
+                                {% else %}
+                                    <a class="nav-link {% if view_name == 'logout' %}active{% endif %}" href="{% url "logout" %}">Logout</a>
+                                {% endif %}
+                            </li>
+                            <li class="nav-item">
+                                {% if not user.is_anonymous %}
+                                    <a class="nav-link {% if view_name == 'profile_page' %}active{% endif %}" href="{% url "profile_page" user %}">Profile</a>
+                                {% endif %}
+                            </li>
                     </ul>
+                {% endwith %}
                 </div>
             </div>
         </nav>
