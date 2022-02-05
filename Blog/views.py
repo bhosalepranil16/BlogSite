@@ -10,23 +10,22 @@ from .models import PostModel, LikeModel
 
 # Create your views here.
 
-class IndexView(View):
-    def get(self, request):
-        try:
-            return render(request, 'Blog/index.html')
-        except:
-            return render(request, 'Blog/index.html')
+class IndexView(ListView):
+    template_name = 'Blog/index.html'
+    model = PostModel
+    context_object_name = 'posts'
+    paginate_by = 3
+
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        data = query_set.order_by('-id')
+        return data
 
 
 class AllPostsView(ListView):
     template_name = 'Blog/all-posts.html'
     model = PostModel
     context_object_name = 'posts'
-
-    def get_queryset(self):
-        query_set = super().get_queryset()
-        data = query_set.order_by('-id')
-        return data
 
 
 class SignUpView(View):
