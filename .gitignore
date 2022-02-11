@@ -4,5 +4,7 @@ BlogSite/.env
 BlogSite/__pycache__
 Blog/migrations/
 Blog/__pycache__
+Chat/migrations/
+Chat/__pycache__
 media/
 __pycache__/
