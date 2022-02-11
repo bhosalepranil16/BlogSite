@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ user }}
+    {{ profile.username }} | BlogSite
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,9 @@
             <h3>First Name: {{ profile.first_name }}</h3>
             <h3>Last Name: {{ profile.last_name }}</h3>
             <h3>Email: {{ profile.email }}</h3>
+            {% with user.username|add:'_'|add:profile.username as target_url %}
+                <a href="{% url 'chat_page' target_url %}" class="btn btn-outline-primary">Message</a>
+            {% endwith %}
         </div>
         <hr />
         <div>
