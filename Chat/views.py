@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 
+from .models import MessageModel
+
 
 # Create your views here.
 
@@ -14,19 +16,26 @@ def chat_page(request, room_name):
         return HttpResponseRedirect(reverse('index_page'))
 
     try:
-        user0 = User.objects.get(username=users[0])
-        user1 = User.objects.get(username=users[1])
+        sender = User.objects.get(username=users[0])
+        receiver = User.objects.get(username=users[1])
     except:
         return HttpResponseRedirect(reverse('index_page'))
 
-    if request.user.username != user0.username and request.user.username != user1.username:
+    if sender.username != request.user.username:
         return HttpResponseRedirect(reverse('index_page'))
 
-    if user0.username < user1.username:
-        room_name = user0.username + '_' + user1.username
+    if sender.username < receiver.username:
+        room_name = sender.username + '_' + receiver.username
     else:
-        room_name = user1.username + '_' + user0.username
+        room_name = receiver.username + '_' + sender.username
+
+        # messages = MessageModel.objects.filter(room_name=room_name).order_by('-created_at')
 
     return render(request, 'Chat/index.html', context={
-        'room_name': room_name
+        'messages': MessageModel.objects.filter(room_name=room_name).order_by('created_at'),
+        'room_name': room_name,
+        'sender_username': sender.username,
+        'sender_id': sender.id,
+        'receiver_username': receiver.username,
+        'receiver_id': receiver.id,
     })
