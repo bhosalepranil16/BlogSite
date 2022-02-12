@@ -17,11 +17,19 @@ class PostModel(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
+
 
 class CommentModel(models.Model):
     text = models.CharField(max_length=500)
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='comments')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
 
 
 class LikeModel(models.Model):
@@ -30,3 +38,6 @@ class LikeModel(models.Model):
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='likes')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
 
+    class Meta:
+        verbose_name = 'Like'
+        verbose_name_plural = 'Likes'
